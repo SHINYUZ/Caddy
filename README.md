@@ -25,14 +25,14 @@
 复制和执行以下命令：
 
 ```bash
-w
+wget -N --no-check-certificate "https://raw.githubusercontent.com/SHINYUZ/Caddy/main/caddy.sh" && chmod +x caddy.sh && ./caddy.sh
 ```
 如果下载失败，请检查 VPS 的网络连接或 DNS 设置
 
 使用镜像加速源下载：
 
 ```bash
-w
+wget -N --no-check-certificate https://ghproxy.net/https://raw.githubusercontent.com/SHINYUZ/Caddy/main/caddy.sh && chmod +x caddy.sh && sed -i 's|https://github.com|https://ghproxy.net/https://github.com|g' caddy.sh && sed -i 's|https://api.github.com|https://ghproxy.net/https://api.github.com|g' caddy.sh && ./caddy.sh
 ```
 如果下载失败，请使用其他加速源下载
 
