@@ -606,6 +606,10 @@ caddy_mgmt_menu() {
 
 # --- 功能：完全卸载 ---
 uninstall_all() {
+    # 提前获取脚本的真实绝对路径，解决因删除软链或环境变化导致 $0 失效的问题
+    local current_script
+    current_script=$(readlink -f "$0")
+
     echo -e "\n========= 卸载管理 =========\n"
     echo -e "${RED}警告：此操作将删除 Caddy、配置文件以及本脚本！${PLAIN}\n"
     
@@ -630,7 +634,12 @@ uninstall_all() {
         echo ""
         echo -e "${GREEN}卸载完成${PLAIN}"
         echo ""
-        rm -f "$0"
+        
+        # 删除真实的脚本文件
+        rm -f "$current_script"
+        # 双重保险：尝试删除当前目录下的同名文件
+        rm -f "caddy.sh"
+        
         exit 0
     else
         echo -e "${YELLOW}已取消${PLAIN}"
