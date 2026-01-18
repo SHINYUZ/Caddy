@@ -642,16 +642,34 @@ uninstall_all() {
 script_mgmt_menu() {
     while true; do
         echo -e "\n========= 脚本管理 =========\n"
-        echo -e " 1. 卸载\n"
-        echo -e " 0. 返回\n"
-        read -p "请选择[0-1]: " sub_choice
+        
+        echo -e " 1. 更新脚本"
+        echo ""
+        echo -e " 2. 卸载脚本"
+        echo ""
+        echo -e " 0. 返回"
+        echo ""
+        
+        read -p "请选择[0-2]: " sub_choice
         
         if [[ "$sub_choice" == "0" ]]; then
             return
         fi
         
         case "$sub_choice" in
-            1) uninstall_all; return ;;
+            1) 
+                echo ""
+                echo -e "${GREEN}正在更新脚本...${PLAIN}"
+                echo ""
+                # 下载 -> 成功后不空行直接打印 -> 延时 -> 替换进程
+                wget -N --no-check-certificate "https://raw.githubusercontent.com/SHINYUZ/Caddy/main/caddy.sh" && chmod +x caddy.sh && \
+                echo -e "${GREEN}更新成功！正在重启脚本...${PLAIN}" && \
+                sleep 1 && \
+                exec ./caddy.sh
+                
+                exit 0
+                ;;
+            2) uninstall_all; return ;;
             *) echo -e "\n${RED}无效选项${PLAIN}"; sleep 1 ;;
         esac
     done
