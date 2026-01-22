@@ -326,7 +326,8 @@ add_proxy() {
     read -p "请输入绑定的域名: " domain
     echo ""
     
-    read -p "请输入反代IP: " proxy_ip
+    read -p "请输入反代IP(回车默认:127.0.0.1): " proxy_ip
+    [[ -z "$proxy_ip" ]] && proxy_ip="127.0.0.1"
     echo ""
     
     read -p "请输入反代端口: " proxy_port
